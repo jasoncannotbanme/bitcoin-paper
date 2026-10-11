@@ -1,0 +1,205 @@
+===== run 1: latency_examples_c (gcc -std=c17 -O2) =====
+latency_examples.c | compiler: 16.1.0
+
+Example 4a: monotonic clock
+  smallest observed step: 100 ns
+  mean cost of one call:  37.2 ns
+
+                                           p50       p95       p99
+Example 4b: copy + scan one message of 336 bytes (ns per message)
+  malloc + copy + free (baseline)        158.0     169.0     316.0
+  copy into reused buffer                104.0     110.0     251.0
+  checksums identical: yes
+
+Example 4c: one price string to a number (ns per call)
+  strtod (baseline)                      123.0     131.0     279.0
+  fixed-point parser                      11.0      12.0      13.0
+  sums: 73975467411.71 and 73975467411.73
+===== run 1: latency_examples_cpp (g++ -std=c++20 -O2 -pthread) =====
+latency_examples.cpp | compiler: 16.1.0 | hardware threads: 4
+steady_clock smallest observed step: 100 ns
+
+                                           p50       p95       p99      mean
+Example 1: order-book update + best bid/ask (ns per update)
+  std::map book (baseline)                96.0     128.0     413.0     117.7
+  flat price ladder                        9.0      10.0      12.0       8.8
+  results identical: yes, ladder memory: 65536 bytes
+
+Example 2: depth message with 10 levels (ns per message)
+  parse: std::string + stod            15754.0   17950.0   20510.0   16008.5
+  parse: std::string + from_chars       1590.0    2046.0    2610.0    1636.2
+  parse: zero-copy fixed-point           466.0     504.0     826.0     481.2
+  parse + std::map book                 2868.0    3464.0    4748.0    2982.6
+  parse + price ladder                   494.0     568.0     978.0     517.3
+  message length: 336 bytes, checksum: 18567598444337
+
+Example 3: thread hand-off, 2000000 messages, 9 runs (ns per message)
+                                        median       min       max
+  std::queue + std::mutex                 74.7      73.5      77.0
+  SPSC ring buffer                        30.4      27.6      32.6
+  checksums identical: yes
+
+===== run 2: latency_examples_c (gcc -std=c17 -O2) =====
+latency_examples.c | compiler: 16.1.0
+
+Example 4a: monotonic clock
+  smallest observed step: 100 ns
+  mean cost of one call:  37.4 ns
+
+                                           p50       p95       p99
+Example 4b: copy + scan one message of 336 bytes (ns per message)
+  malloc + copy + free (baseline)        156.0     167.0     316.0
+  copy into reused buffer                104.0     108.0     250.0
+  checksums identical: yes
+
+Example 4c: one price string to a number (ns per call)
+  strtod (baseline)                      124.0     132.0     275.0
+  fixed-point parser                      11.0      12.0      13.0
+  sums: 73975467411.71 and 73975467411.73
+===== run 2: latency_examples_cpp (g++ -std=c++20 -O2 -pthread) =====
+latency_examples.cpp | compiler: 16.1.0 | hardware threads: 4
+steady_clock smallest observed step: 100 ns
+
+                                           p50       p95       p99      mean
+Example 1: order-book update + best bid/ask (ns per update)
+  std::map book (baseline)                91.0     100.0     221.0      93.6
+  flat price ladder                        8.0      10.0      12.0       9.1
+  results identical: yes, ladder memory: 65536 bytes
+
+Example 2: depth message with 10 levels (ns per message)
+  parse: std::string + stod            16042.0   18230.0   20514.0   16329.5
+  parse: std::string + from_chars       1578.0    2116.0    2840.0    1646.5
+  parse: zero-copy fixed-point           468.0     506.0     798.0     481.6
+  parse + std::map book                 2854.0    3472.0    4854.0    2981.8
+  parse + price ladder                   494.0     578.0    1062.0     520.6
+  message length: 336 bytes, checksum: 18567598444337
+
+Example 3: thread hand-off, 2000000 messages, 9 runs (ns per message)
+                                        median       min       max
+  std::queue + std::mutex                 75.6      72.8      91.3
+  SPSC ring buffer                        29.7      25.5      30.2
+  checksums identical: yes
+
+===== run 3: latency_examples_c (gcc -std=c17 -O2) =====
+latency_examples.c | compiler: 16.1.0
+
+Example 4a: monotonic clock
+  smallest observed step: 100 ns
+  mean cost of one call:  37.4 ns
+
+                                           p50       p95       p99
+Example 4b: copy + scan one message of 336 bytes (ns per message)
+  malloc + copy + free (baseline)        156.0     165.0     314.0
+  copy into reused buffer                104.0     110.0     255.0
+  checksums identical: yes
+
+Example 4c: one price string to a number (ns per call)
+  strtod (baseline)                      126.0     132.0     279.0
+  fixed-point parser                      11.0      12.0      15.0
+  sums: 73975467411.71 and 73975467411.73
+===== run 3: latency_examples_cpp (g++ -std=c++20 -O2 -pthread) =====
+latency_examples.cpp | compiler: 16.1.0 | hardware threads: 4
+steady_clock smallest observed step: 100 ns
+
+                                           p50       p95       p99      mean
+Example 1: order-book update + best bid/ask (ns per update)
+  std::map book (baseline)                91.0     100.0     228.0      93.8
+  flat price ladder                        8.0      10.0      12.0       8.8
+  results identical: yes, ladder memory: 65536 bytes
+
+Example 2: depth message with 10 levels (ns per message)
+  parse: std::string + stod            15868.0   17930.0   20296.0   16131.8
+  parse: std::string + from_chars       1578.0    2122.0    2750.0    1638.4
+  parse: zero-copy fixed-point           464.0     538.0    1038.0     485.7
+  parse + std::map book                 2856.0    3454.0    4846.0    2977.0
+  parse + price ladder                   506.0     566.0    1038.0     526.5
+  message length: 336 bytes, checksum: 18567598444337
+
+Example 3: thread hand-off, 2000000 messages, 9 runs (ns per message)
+                                        median       min       max
+  std::queue + std::mutex                 75.5      74.7      97.4
+  SPSC ring buffer                        27.6      21.8      28.8
+  checksums identical: yes
+
+===== run 4: latency_examples_c (gcc -std=c17 -O2) =====
+latency_examples.c | compiler: 16.1.0
+
+Example 4a: monotonic clock
+  smallest observed step: 100 ns
+  mean cost of one call:  37.6 ns
+
+                                           p50       p95       p99
+Example 4b: copy + scan one message of 336 bytes (ns per message)
+  malloc + copy + free (baseline)        155.0     167.0     316.0
+  copy into reused buffer                104.0     109.0     251.0
+  checksums identical: yes
+
+Example 4c: one price string to a number (ns per call)
+  strtod (baseline)                      126.0     133.0     278.0
+  fixed-point parser                      11.0      12.0      13.0
+  sums: 73975467411.71 and 73975467411.73
+===== run 4: latency_examples_cpp (g++ -std=c++20 -O2 -pthread) =====
+latency_examples.cpp | compiler: 16.1.0 | hardware threads: 4
+steady_clock smallest observed step: 100 ns
+
+                                           p50       p95       p99      mean
+Example 1: order-book update + best bid/ask (ns per update)
+  std::map book (baseline)                91.0     101.0     233.0      94.3
+  flat price ladder                        9.0      10.0      12.0       9.0
+  results identical: yes, ladder memory: 65536 bytes
+
+Example 2: depth message with 10 levels (ns per message)
+  parse: std::string + stod            15728.0   17850.0   20164.0   16170.6
+  parse: std::string + from_chars       1592.0    2124.0    2792.0    1646.6
+  parse: zero-copy fixed-point           458.0     518.0    1030.0     482.2
+  parse + std::map book                 2860.0    3466.0    4906.0    2981.2
+  parse + price ladder                   506.0     716.0    1088.0     532.7
+  message length: 336 bytes, checksum: 18567598444337
+
+Example 3: thread hand-off, 2000000 messages, 9 runs (ns per message)
+                                        median       min       max
+  std::queue + std::mutex                 75.0      73.7      77.5
+  SPSC ring buffer                        30.3      27.8      30.8
+  checksums identical: yes
+
+===== run 5: latency_examples_c (gcc -std=c17 -O2) =====
+latency_examples.c | compiler: 16.1.0
+
+Example 4a: monotonic clock
+  smallest observed step: 100 ns
+  mean cost of one call:  37.2 ns
+
+                                           p50       p95       p99
+Example 4b: copy + scan one message of 336 bytes (ns per message)
+  malloc + copy + free (baseline)        159.0     171.0     316.0
+  copy into reused buffer                107.0     112.0     249.0
+  checksums identical: yes
+
+Example 4c: one price string to a number (ns per call)
+  strtod (baseline)                      124.0     130.0     270.0
+  fixed-point parser                      11.0      11.0      12.0
+  sums: 73975467411.71 and 73975467411.73
+===== run 5: latency_examples_cpp (g++ -std=c++20 -O2 -pthread) =====
+latency_examples.cpp | compiler: 16.1.0 | hardware threads: 4
+steady_clock smallest observed step: 100 ns
+
+                                           p50       p95       p99      mean
+Example 1: order-book update + best bid/ask (ns per update)
+  std::map book (baseline)                91.0     100.0     229.0      94.1
+  flat price ladder                        8.0      10.0      12.0       9.0
+  results identical: yes, ladder memory: 65536 bytes
+
+Example 2: depth message with 10 levels (ns per message)
+  parse: std::string + stod            15734.0   17978.0   20668.0   16031.6
+  parse: std::string + from_chars       1586.0    1958.0    2752.0    1637.4
+  parse: zero-copy fixed-point           458.0     520.0     974.0     482.4
+  parse + std::map book                 2902.0    3548.0    4938.0    3011.8
+  parse + price ladder                   496.0     566.0    1032.0     520.6
+  message length: 336 bytes, checksum: 18567598444337
+
+Example 3: thread hand-off, 2000000 messages, 9 runs (ns per message)
+                                        median       min       max
+  std::queue + std::mutex                 76.1      71.8      77.7
+  SPSC ring buffer                        28.7      25.3      30.4
+  checksums identical: yes
+
